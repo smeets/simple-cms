@@ -3,25 +3,21 @@ var db = require('../../db')
 var router = new Router()
 
 var home = require('./home')
-router.get('/', (req, res) => {
-	res.marko(home, {
-		session: req.session
-	})
-})
-
 var photo = require('./photo')
-router.get('/photo', (req, res) => {
-	res.marko(photo, {
-		session: req.session
-	})
-})
-
 var gallery = require('./gallery')
-router.get('/gallery', async (req, res) => {
 
-	res.marko(gallery, {
-		session: req.session
-	})
-})
+function render(template) {
+	return (req, res) => {
+		res.marko(template, {
+			session: req.session
+		})
+	}
+}
+
+router.use('/auth', require('./auth'))
+
+router.get('/', render(home))
+router.get('/photo', render(photo))
+router.get('/gallery', render(gallery))
 
 module.exports = router
