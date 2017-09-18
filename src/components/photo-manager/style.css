@@ -1,0 +1,13 @@
+.photos {
+	display: flex;
+	flex-flow: row wrap;
+}
+.photo {
+	border: 1px solid black;
+	margin: 2px;
+}
+
+.photo img {
+	max-width: 200px;
+	max-height: 200px;
+}

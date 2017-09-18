@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+html
+  head lang="en-US"
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width"
+    title
+      include(input.title)
+    lasso-head
+  body
+    site-header
+      @title include(input.title)
+    div.content
+      include(input.content)
+    site-footer
+    lasso-body

@@ -1,0 +1,14 @@
+$ var photoLabel = state.photos.length === 1 ? "photo" : "photos"
+
+div
+  label -- ${state.photos.length} ${photoLabel}
+
+div.photos
+  for(uuid in state.photos)
+    div.photo
+      div.overlay -- #${uuid}
+        if(state.selected.indexOf(uuid) >= 0)
+          input type="checkbox" checked on-change('onPhotoChange', uuid)
+        else
+          input type="checkbox" on-change('onPhotoChange', uuid)
+      img src=`api/photo/${uuid}/thumbnail`

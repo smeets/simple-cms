@@ -1,0 +1,30 @@
+.gallery {}
+
+.header h2 { display: inline; }
+
+.edit {
+	font-size: 150%;
+	font-weight: 800;
+	border: none;
+	background: none;
+	transition: all 100ms ease;
+}
+.edit:hover {
+	cursor: pointer;
+	color: yellow;
+	text-shadow: 0px 2px 8px black;
+}
+.edit:active {
+	color: black;
+	text-shadow: 0px 2px 8px yellow;
+}
+
+.photos {
+	display: flex;
+	margin-top: 0.1em;
+}
+
+.photos img {
+	max-width: 200px;
+	max-height: 200px;
+}

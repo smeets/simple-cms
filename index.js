@@ -1,9 +1,22 @@
+require('marko/express')
+require('marko/node-require')
+
 var express = require('express')
 
-var app = express()
 var config = require('./config')
+var port = process.env.PORT || 8080
+var isDev = !process.env.NODE_ENV
 
-var express = require('express')
+require('lasso').configure({
+	plugins: [
+		'lasso-marko'
+	],
+	outputDir: __dirname + '/static',
+	bundlingEnabled: !isDev,
+	minify: !isDev,
+	fingerprintsEnabled: !isDev
+})
+
 var app = express()
 
 var session = require('express-session')
@@ -13,13 +26,18 @@ app.use(session({
     secret: config.session.secret
 }))
 
-if (process.env.MODE !== 'prod') {
-	console.log('Hosting local content')
-	app.use('/', express.static('./public'))
+if (isDev) {
+	console.log('INFO', 'Serving files from static/')
+	app.use(require('lasso/middleware').serveStatic())
+} else {
+	console.log('WARN', 'Static files are not served')
 }
 
-var initContentModules = require('./content')
-initContentModules(app)
+app.use('/', require('./src/routes'))
+app.use('/api', require('./api'))
 
-var port = process.env.PORT || 8080
-app.listen(port, () => console.log('Serving on ' + port))
+app.listen(port, (err) => {
+	if (err) throw err
+
+	console.log('Listening on port %d', port)
+})

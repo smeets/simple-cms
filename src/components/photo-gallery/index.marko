@@ -1,0 +1,24 @@
+$ var galleryLabel = state.galleries.length === 1 ? "gallery" : "galleries"
+
+div
+  label -- ${state.galleries.length} ${galleryLabel}
+
+div.galleries
+  for(gallery in state.galleries)
+    section.gallery
+      div.header
+        h2 -- #${gallery.name}
+        button.edit on-click('updateGallery', gallery.name) -- &#9874;
+      div.photos
+        for(uuid in gallery.photos)
+          a href=`/api/photo/${uuid}`
+            img src=`api/photo/${uuid}/thumbnail`
+
+$ var showOverlay = state.active !== ""
+app-overlay [
+    key="add-photo-modal"
+    visible=showOverlay
+    on-ok('updateGalleryCommit')
+    on-cancel('updateGalleryCancel')
+  ]
+    photo-manager selected=state.hidden.selected
