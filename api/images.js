@@ -6,14 +6,17 @@ var Router = require('express-promise-router')
 var router = new Router()
 var sharp = require('sharp')
 
-var basePath = path.normalize('/usr/share/pics')
+var basePath = path.normalize('/usr/share/photo')
 if (process.platform === 'win32')
-	basePath = path.normalize('D:\\tmp\\pics')
+	basePath = path.normalize('D:\\tmp\\photo')
 
 var thumbPath = path.join(basePath, 'thumbnails')
 var fullPath = path.join(basePath, 'fullres')
 var uploadPath = path.join(basePath, 'upload')
-console.log('File paths are', [basePath, thumbPath, fullPath, uploadPath])
+console.log('INFO', 'Photo file paths are', [
+	basePath, thumbPath,
+	fullPath, uploadPath
+])
 
 var storage = multer.diskStorage({
 	destination: uploadPath,
@@ -86,14 +89,19 @@ function pipePhoto(path, res) {
 	stream.pipe(res)
 }
 
-router.get('/:photo', (req, res) => {
-	var uuid = parseInt(req.params.photo).toString()
-	pipePhoto(path.join(fullPath, uuid), res)
-})
+if (!process.env.NODE_ENV) {
+	console.log('INFO', 'Serving photos')
+	router.get('/:photo', (req, res) => {
+		var uuid = parseInt(req.params.photo).toString()
+		pipePhoto(path.join(fullPath, uuid), res)
+	})
 
-router.get('/:photo/thumbnail', (req, res) => {
-	var uuid = parseInt(req.params.photo).toString()
-	pipePhoto(path.join(thumbPath, uuid), res)
-})
+	router.get('/:photo/thumbnail', (req, res) => {
+		var uuid = parseInt(req.params.photo).toString()
+		pipePhoto(path.join(thumbPath, uuid), res)
+	})
+} else {
+	console.log('WARN', 'Photos are _not_ served')
+}
 
 module.exports = router

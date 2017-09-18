@@ -29,7 +29,6 @@ async function addPhoto(uuid, gallery) {
 		await db.query('INSERT INTO gallery (uuid,name) VALUES ($1, $2)', [uuid, gallery])
 		return true
 	} catch (e) {
-		console.log(e)
 		return false
 	}
 }
