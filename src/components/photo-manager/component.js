@@ -16,7 +16,9 @@ module.exports = class {
   }
 
   loadPhotos() {
-    fetch('/api/photo')
+    fetch('/api/photo', {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(res => {
         this.state.photos = res.data

@@ -14,9 +14,10 @@ function render(template) {
 	}
 }
 
-router.use('/auth', require('./auth'))
 
 router.get('/', render(home))
+router.use('/auth', require('./auth'))
+
 router.get('/photo', render(photo))
 router.get('/gallery', render(gallery))
 

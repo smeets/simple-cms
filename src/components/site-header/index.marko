@@ -1,6 +1,11 @@
 header
   h1
     include(input.title)
+  div.login
+    if(input.session.login)
+      a href="/auth/logout" -- logout ${input.session.user}
+    else
+      a href="/auth/login" -- Login
   nav.menu
     a href="/" -- home
     a href="/photo" -- photo

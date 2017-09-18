@@ -15,7 +15,9 @@ module.exports = class {
   }
 
   loadGalleries() {
-    fetch('/api/gallery')
+    fetch('/api/gallery', {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(res => {
         var galleries = res.data.map(name => {
@@ -30,7 +32,9 @@ module.exports = class {
   }
 
   loadGallery(gallery) {
-    fetch(`/api/gallery/${gallery.name}`)
+    fetch(`/api/gallery/${gallery.name}`, {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(res => {
         gallery.photos = res.photos

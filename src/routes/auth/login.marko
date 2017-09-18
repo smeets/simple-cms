@@ -1,0 +1,12 @@
+site-layout session=input.session
+	@title -- login
+	@content
+		if(input.session.login)
+			p -- You, ${input.session.user} are already logged in.
+		else
+			for(notice in input.notices)
+				p -- ${notice}
+			form method="POST" action="/auth/login"
+				input type="username" name="user" placeholder="wobbly-squid"
+				input type="password" name="pass"
+				input type="submit" value="login"
