@@ -2,3 +2,4 @@ config/user.js
 node_modules/
 .cache/
 static/
+*.marko.js
