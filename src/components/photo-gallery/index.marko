@@ -7,7 +7,7 @@ div.galleries
   for(gallery in state.galleries)
     section.gallery
       div.header
-        h2 -- #${gallery.name}
+        h2 -- #{gallery.name}
         button.edit on-click('updateGallery', gallery.name) -- &#9874;
       div.photos
         for(uuid in gallery.photos)

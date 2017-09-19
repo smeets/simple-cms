@@ -1,5 +1,29 @@
+class {
+	onCreate() {
+		this.state = {
+			selected: [],
+			uploading: false,
+			progress: 0
+		}
+	}
+
+	uploadPhotos(evt) {
+		//evt.preventDefault()
+
+		var data = new FormData(this.getEl("upload-form"))
+		this.state.uploading = true
+
+
+	}
+}
+
 site-layout session=input.session
   @title -- photo
   @content
-    button -- + upload photo
-    photo-manager selected=[]
+  	h3 -- Upload Photo
+    form key="upload-form"
+    	input type="file" name="photos" multiple
+    button on-click('uploadPhotos') disabled=state.uploading -- Upload
+
+    h3 -- Uploaded
+    photo-manager selected=state.selected
