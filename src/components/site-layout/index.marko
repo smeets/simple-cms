@@ -8,7 +8,7 @@ html
     lasso-head
   body
     site-header session=input.session
-      @title include(input.title)
+      @title -- input.title
     div.content
       include(input.content)
     site-footer

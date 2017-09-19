@@ -1,0 +1,46 @@
+class {
+	onCreate() {
+		this.state = {
+			uploading: false,
+			status: ""
+		}
+	}
+
+	uploadPhotos() {
+		this.state.uploading = true
+
+		var data = new FormData(this.getEl("upload-form"))
+
+		var xhr = new XMLHttpRequest()
+		xhr.open("POST", "/api/photo")
+
+		xhr.upload.onprogress = e => {
+			if (!e.lengthComputable) return
+
+			var sent = e.position || e.loaded
+			var total = e.totalSize || e.total
+			var completed = 100 * sent/total
+
+			if (completed < 100)
+				this.state.status = completed.toFixed(2) + "%"
+			else
+				this.state.status = "Working..."
+		}
+
+		xhr.onload = e => {
+			var data = JSON.parse(xhr.responseText)
+			var uuid = data.data
+
+			this.state.uploading = false
+			this.emit('upload', uuid)
+		}
+
+		xhr.send(data)
+	}
+}
+
+div
+	form key="upload-form"
+		input type="file" name="photos" multiple
+	$ var buttonTxt = state.uploading ? state.status : "Upload"
+	button on-click('uploadPhotos') disabled=state.uploading -- ${buttonTxt}

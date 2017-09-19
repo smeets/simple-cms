@@ -1,16 +1,9 @@
 var Router = require('express-promise-router')
 var router = new Router()
+var render = require('../../helper/render')
 
 var bodyParser = require('body-parser')
 router.use(bodyParser.urlencoded())
-
-function render(template) {
-	return (req, res) => {
-		res.marko(template, {
-			session: req.session
-		})
-	}
-}
 
 function authenticate(user, pass, req) {
 	if (user === pass) {

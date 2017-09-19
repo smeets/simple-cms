@@ -6,6 +6,7 @@ module.exports = class {
   onCreate(input) {
     this.state = {
       photos: [],
+      loading: false,
       selected: input.selected || [],
       updated: Date.now()
     }
@@ -15,13 +16,23 @@ module.exports = class {
     this.loadPhotos()
   }
 
+  addPhotos(newPhotos) {
+    this.state.photos = this.state.photos.concat(newPhotos)
+    //this.setStateDirty('photos')
+  }
+
   loadPhotos() {
+    this.state.loading = true
     fetch('/api/photo', {
       credentials: "same-origin"
     })
       .then(res => res.json())
       .then(res => {
+        this.state.loading = false
         this.state.photos = res.data
+      })
+      .catch(err => {
+        this.state.loading = false
       })
   }
 
