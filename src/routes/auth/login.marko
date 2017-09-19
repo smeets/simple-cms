@@ -1,5 +1,4 @@
-site-layout session=input.session
-	@title -- login
+site-layout session=input.session title="login"
 	@content
 		if(input.session.login)
 			p -- You, ${input.session.user} are already logged in.

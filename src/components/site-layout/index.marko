@@ -3,12 +3,10 @@ html
   head lang="en-US"
     meta charset="utf-8"
     meta name="viewport" content="width=device-width"
-    title
-      include(input.title)
+    title -- ${input.title}
     lasso-head
   body
-    site-header session=input.session
-      @title -- input.title
+    site-header session=input.session title=input.title
     div.content
       include(input.content)
     site-footer

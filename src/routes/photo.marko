@@ -7,8 +7,7 @@ class {
   }
 }
 
-site-layout session=input.session
-  @title -- photo
+site-layout session=input.session title="photo"
   @content
     h3 -- Upload Photo
     photo-uploader on-upload('refresh')

@@ -18,7 +18,6 @@ module.exports = class {
 
   addPhotos(newPhotos) {
     this.state.photos = this.state.photos.concat(newPhotos)
-    //this.setStateDirty('photos')
   }
 
   loadPhotos() {
