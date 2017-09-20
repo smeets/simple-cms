@@ -26,6 +26,7 @@ class {
 				this.state.status = "Working..."
 		}, false)
 
+
 		xhr.addEventListener('load', () => {
 			var data = JSON.parse(xhr.responseText)
 			var uuid = data.data
@@ -38,12 +39,14 @@ class {
 			'504': "WARNING: Server couldn't finish request within 600 seconds and terminated this connection. The processing job is still running.",
 			'413': "ERROR: Total size of uploaded files must be <= 100MB."
 		}
-		xhr.addEventListener("error", () => {
+		function handleError() {
 			console.log('detected error')
 			var code = xhr.status.toString()
 			this.state.uploading = false
 			this.state.error = error[code] || `ERROR: Unknown Error (${code})`
-		})
+		}
+		xhr.addEventListener('abort', handleError)
+		xhr.addEventListener("error", handleError)
 
 		xhr.send(data)
 	}
