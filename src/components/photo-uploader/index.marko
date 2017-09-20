@@ -2,7 +2,8 @@ class {
 	onCreate() {
 		this.state = {
 			uploading: false,
-			status: ""
+			status: "",
+			error: ""
 		}
 	}
 
@@ -35,6 +36,11 @@ class {
 			this.emit('upload', uuid)
 		}
 
+		xhr.onerror = e => {
+			this.state.uploading = false
+			this.state.error = e && e.getMessage()
+		}
+
 		xhr.send(data)
 	}
 }
@@ -44,3 +50,5 @@ div
 		input type="file" name="photos" multiple
 	$ var buttonTxt = state.uploading ? state.status : "Upload"
 	button on-click('uploadPhotos') disabled=state.uploading -- ${buttonTxt}
+	if(state.error)
+		label -- ${state.error}
