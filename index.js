@@ -12,9 +12,9 @@ require('lasso').configure({
 		'lasso-marko'
 	],
 	outputDir: __dirname + '/static',
-	bundlingEnabled: !isDev,
-	minify: !isDev,
-	fingerprintsEnabled: !isDev
+	bundlingEnabled: false,
+	minify: false,
+	fingerprintsEnabled: false
 })
 
 var app = express()
